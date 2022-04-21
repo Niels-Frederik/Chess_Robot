@@ -1,3 +1,4 @@
+#include <Servo.h>
 // defines pins numbers
 const int ns_stepPin = 3; 
 const int ns_dirPin = 4; 
@@ -11,6 +12,8 @@ int ns_steps = 0;
 int ew_steps = 0;
 int ns_pos = 0;
 int ew_pos = 0;
+int grabberPin = 5;
+Servo grabberServo; 
 
 #define SOP '<'
 #define EOP '>'
@@ -28,6 +31,7 @@ void setup() {
   pinMode(s_switch,INPUT_PULLUP);
   pinMode(n_switch,INPUT_PULLUP);
   pinMode(w_switch,INPUT_PULLUP);
+  grabberServo.attach(grabberPin);
   Serial.begin(115200);
   //calibrate();
 }
@@ -114,6 +118,8 @@ void execute_instruction(int* instruction)
     }
 }
 
+//======================================== INSTRUCTIONS ===========================================
+
 void calibrate()
 {
   while(digitalRead(s_switch) != 0)
@@ -199,4 +205,24 @@ void moveTo(int pos_ns, int pos_ew)
   }
   ns_pos = pos_ns;
   ew_pos = pos_ew;
+}
+
+void lower_grabber()
+{
+  
+}
+
+void raise_grabber()
+{
+  
+}
+
+void close_grabber()
+{
+  grabberServo.write(0);
+}
+
+void open_grabber()
+{
+  grabberServo.write(80);
 }
