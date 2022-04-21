@@ -3,6 +3,7 @@ import string
 import serial
 import time
 import serial.tools.list_ports as ports
+import cv2
 
 ns_revolutions = 1200
 ew_revolutions = 1200
@@ -59,6 +60,9 @@ def connect_to_arduino():
         if("usb" in i.device):
             relevant_ports.append(i.device)
 
+    if(len(relevant_ports) == 0):
+        print("No arduino connection found")
+        return;
     if(len(relevant_ports) > 1):
         print("choose port (0,1,2...)")
         print(relevant_ports)
@@ -67,18 +71,35 @@ def connect_to_arduino():
     else:
         return (relevant_ports[0])
 
+def analyze_chess_board():
+    if vc.isOpened(): # try to get the first frame
+        rval, frame = vc.read()
+    else:
+        rval = False
+
+    if(rval):
+        cv2.imwrite('/Users/nieb/Documents/HTMAA/Chess_Robot/engine/images/opencv.png', frame)
+        cv2.imshow("preview", frame)
+        #time.sleep()
+
+    #vc.release()
+    #cv2.destroyWindow("preview")
+
 
 stockfish = Stockfish()
 port = connect_to_arduino()
 print(port)
 arduino = serial.Serial(port=port, baudrate=115200, timeout=1)
 time.sleep(1)
+#cv2.namedWindow("preview")
+#vc = cv2.VideoCapture(1)
 
 while(True):
     mode = int(input("Choose your option: \n 0 - play \n 1 - calibrate \n"))
 
     if(mode == 0):
         while(True):
+            #analyze_chess_board()
             make_ai_move()
             make_player_move()
     elif(mode == 1):
