@@ -33,6 +33,7 @@ void setup() {
   grabberServo.attach(grabberPin);
   z_axis.attach(z_axis_pin);
   Serial.begin(115200);
+  raise_grabber();
 }
 
 void loop()
@@ -93,56 +94,52 @@ void loop()
 }
 
 void execute_instruction(int* instruction)
-{
+{  
   switch(instruction[0])
   {
     case 1:
-      Serial.print("Move to");
-      Serial.print(instruction[1]);
-      Serial.print(instruction[1]);
       moveTo(instruction[1], instruction[2]);
       Serial.print("Moved");
       break;
     case 2:
-      lower_grabber();
-      delay(2000);
-      close_grabber();
-      delay(1000);
-      raise_grabber();
+      grab_piece();
       Serial.print("Grabbed");
       break;
     case 3:
-      lower_grabber();
-      delay(2000);
-      open_grabber();
-      delay(1000);
-      raise_grabber();
-      Serial.print("Released");
+      place_piece();
+      Serial.print("Placed");
       break;
     case 4:
-      //calibrate();
-      //moveWest(100);
-      //moveEast(100);
-      //moveSouth(100);
-      //moveNorth(100);
       calibrate();
       Serial.print("Calibrated");
       break;
     case 5:
-      Serial.print("Return to zero position");
+      open_grabber();
+      lower_grabber();
+      //Serial.print("Calibrated");
       break;
     case 6:
-      moveNorth(100);
-      Serial.print("Return to zero position");
+      open_grabber();
+      //lower_grabber();
+      Serial.print("open grabber");
       break;
     case 7:
-      moveNorth(100);
-      moveSouth(100);
-      moveEast(100);
-      moveWest(100);
-      Serial.print("done");
+      close_grabber();
+      //lower_grabber();
+      Serial.print("close grabber");
+      break;
+    case 8:
+      lower_grabber();
+      //lower_grabber();
+      Serial.print("close grabber");
+      break;
+    case 10:
+      raise_grabber();
+      //lower_grabber();
+      Serial.print("close grabber");
       break;
     }
+    
 }
 
 //======================================== INSTRUCTIONS ===========================================
@@ -203,9 +200,9 @@ void moveEast(int steps)
   digitalWrite(ew_dirPin,LOW);
   for(int i = 0; i < steps; i++) {
       digitalWrite(ew_stepPin,HIGH);
-      delayMicroseconds(1000);
+      delayMicroseconds(1500);
       digitalWrite(ew_stepPin,LOW);
-      delayMicroseconds(1000);
+      delayMicroseconds(1500);
   }
   ew_pos+=steps;
 }
@@ -232,6 +229,24 @@ void moveTo(int pos_ns, int pos_ew)
   }
   ns_pos = pos_ns;
   ew_pos = pos_ew;
+}
+
+void grab_piece()
+{
+  lower_grabber();
+  delay(1500);
+  close_grabber();
+  delay(500);
+  raise_grabber();
+}
+
+void place_piece()
+{
+  lower_grabber();
+  delay(1500);
+  open_grabber();
+  delay(500);
+  raise_grabber();
 }
 
 void lower_grabber()
