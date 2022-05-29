@@ -1,7 +1,9 @@
 #include <Servo.h>
 // defines pins numbers
 const int ns_stepPin = 3; 
-const int ns_dirPin = 4; 
+const int ns_dirPin = 4;
+const int ns_sleepPin = 5;
+const int ew_sleepPin = 8;
 const int ew_stepPin = 6; 
 const int ew_dirPin = 7;
 const int s_switch = 2;
@@ -26,6 +28,8 @@ void setup() {
   // Sets the two pins as Outputs
   pinMode(ns_stepPin,OUTPUT); 
   pinMode(ns_dirPin,OUTPUT);
+  pinMode(ns_sleepPin,OUTPUT);
+  pinMode(ew_sleepPin,OUTPUT);
   pinMode(ew_stepPin,OUTPUT); 
   pinMode(ew_dirPin,OUTPUT);
   pinMode(s_switch,INPUT_PULLUP);
@@ -146,21 +150,38 @@ void execute_instruction(int* instruction)
 
 void calibrate()
 {
+  digitalWrite(ns_sleepPin, HIGH);
   while(digitalRead(s_switch) != 0)
   {
-    moveSouth(10);
+    digitalWrite(ns_dirPin,LOW);
+    for(int i = 0; i < 10; i++) {
+      digitalWrite(ns_stepPin,HIGH);
+      delayMicroseconds(1000);
+      digitalWrite(ns_stepPin,LOW);
+      delayMicroseconds(1000);
+    }
   }
+  digitalWrite(ns_sleepPin, LOW);
   ns_pos = 0;
-  
+
+  digitalWrite(ew_sleepPin, HIGH);
   while(digitalRead(w_switch) != 0)
   {
-    moveWest(10);
+    digitalWrite(ew_dirPin,HIGH);
+    for(int i = 0; i < 10; i++) {
+      digitalWrite(ew_stepPin,HIGH);
+      delayMicroseconds(1000);
+      digitalWrite(ew_stepPin,LOW);
+      delayMicroseconds(1000);
+    }
   }
+  digitalWrite(ew_sleepPin, LOW);
   ew_pos = 0;
 }
 
 void moveSouth(int steps)
 {
+  digitalWrite(ns_sleepPin, HIGH);
   digitalWrite(ns_dirPin,LOW);
   for(int i = 0; i < steps; i++) {
       digitalWrite(ns_stepPin,HIGH);
@@ -169,10 +190,12 @@ void moveSouth(int steps)
       delayMicroseconds(1000);
   }
   ns_pos-=steps;
+  digitalWrite(ns_sleepPin, LOW);
 }
 
 void moveNorth(int steps)
 {
+  digitalWrite(ns_sleepPin, HIGH);
   digitalWrite(ns_dirPin,HIGH);
   for(int i = 0; i < steps; i++) {
       digitalWrite(ns_stepPin,HIGH);
@@ -181,10 +204,12 @@ void moveNorth(int steps)
       delayMicroseconds(1000);
   }
   ns_pos+=steps;
+  digitalWrite(ns_sleepPin, LOW);
 }
 
 void moveWest(int steps)
 {
+  digitalWrite(ew_sleepPin, HIGH);
   digitalWrite(ew_dirPin,HIGH);
   for(int i = 0; i < steps; i++) {
       digitalWrite(ew_stepPin,HIGH);
@@ -193,18 +218,21 @@ void moveWest(int steps)
       delayMicroseconds(1000);
   }
   ew_pos-=steps;
+  digitalWrite(ew_sleepPin, LOW);
 }
 
 void moveEast(int steps)
 {
+  digitalWrite(ew_sleepPin, HIGH);
   digitalWrite(ew_dirPin,LOW);
   for(int i = 0; i < steps; i++) {
       digitalWrite(ew_stepPin,HIGH);
-      delayMicroseconds(1500);
+      delayMicroseconds(1000);
       digitalWrite(ew_stepPin,LOW);
-      delayMicroseconds(1500);
+      delayMicroseconds(1000);
   }
   ew_pos+=steps;
+  digitalWrite(ew_sleepPin, LOW);
 }
 
 void moveTo(int pos_ns, int pos_ew)

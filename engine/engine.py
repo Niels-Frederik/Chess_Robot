@@ -4,14 +4,16 @@ import serial
 import time
 import serial.tools.list_ports as ports
 
-north_limit = 1375
-south_limit = 0
+north_limit = 1425
+south_limit = 45
 ns_square = (north_limit - south_limit) / 7
-east_limit = 2050
-west_limit = 675
+east_limit = 1975
+west_limit = 575
 ew_square = (east_limit - west_limit) / 7
 next_black_death_pos = [north_limit, (west_limit - ew_square)]
 black_death_count = 0
+play_against_self = True
+move_count = 0
 
 
 def make_ai_move():
@@ -45,7 +47,11 @@ def send_to_arduino(instructions):
 
 
 def make_player_move():
-    playerMove = input('Please Enter Your Move \n')
+    playerMove = input('Please Enter Your Move (or 0 for calibration) \n')
+    if(playerMove == '0'):
+        print("recalibrating, please wait")
+        send_to_arduino("4")
+        playerMove = input('Please enter your move \n')
     if stockfish.is_move_correct(playerMove):
         stockfish.make_moves_from_current_position([playerMove])
         print(stockfish.get_board_visual())
@@ -158,11 +164,26 @@ arduino = serial.Serial(port=port, baudrate=115200, timeout=1)
 time.sleep(1)
 
 while True:
-    mode = int(input("Choose your option: \n 0 - play \n 1 - calibrate \n"))
-
+    mode = int(input("Choose your option: \n 0 - play \n 1 - calibrate \n 2 - Manual control \n"))
     if mode == 0:
         while True:
-            make_player_move()
+            if play_against_self:
+                make_ai_move()
+                move_count += 1
+                if move_count % 5 == 0:
+                    send_to_arduino("4")
+            else:
+                make_player_move()
+
             make_ai_move()
+            move_count += 1
+            if move_count % 5 == 0:
+                send_to_arduino("4")
+
     elif mode == 1:
         send_to_arduino("4")
+    elif mode == 2:
+        while True:
+            instruction = input("instruction: \n 1 x y (move to x,y) \n 2 (grab piece) \n 3 (place piece) \n 4 (calibrate) \n 5 (open and lower) \n 6 (open grabber) \n 7 (close grabber) \n 8 (lower grabber) \n 10 (raise grabber) \n")
+            send_to_arduino([instruction])
+            #print(instruction)
