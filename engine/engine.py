@@ -15,6 +15,108 @@ black_death_count = 0
 play_against_self = True
 move_count = 0
 
+def gantry_test():
+    send_to_arduino(["4"])
+    for i in range(3):
+        send_to_arduino(convert_move_to_coordinates("a1b1"))
+        send_to_arduino(convert_move_to_coordinates("c1d1"))
+        send_to_arduino(convert_move_to_coordinates("e1f1"))
+        send_to_arduino(convert_move_to_coordinates("g1h1"))
+        send_to_arduino(convert_move_to_coordinates("a2b2"))
+        send_to_arduino(convert_move_to_coordinates("c2d2"))
+        send_to_arduino(convert_move_to_coordinates("e2f2"))
+        send_to_arduino(convert_move_to_coordinates("g2h2"))
+        send_to_arduino(convert_move_to_coordinates("a3b3"))
+        send_to_arduino(convert_move_to_coordinates("c3d3"))
+        send_to_arduino(convert_move_to_coordinates("e3f3"))
+        send_to_arduino(convert_move_to_coordinates("g3h3"))
+        send_to_arduino(convert_move_to_coordinates("a4b4"))
+        send_to_arduino(convert_move_to_coordinates("c4d4"))
+        send_to_arduino(convert_move_to_coordinates("e4f4"))
+        send_to_arduino(convert_move_to_coordinates("g4h4"))
+        send_to_arduino(convert_move_to_coordinates("a5b5"))
+        send_to_arduino(convert_move_to_coordinates("c5d5"))
+        send_to_arduino(convert_move_to_coordinates("e5f5"))
+        send_to_arduino(convert_move_to_coordinates("g5h5"))
+        send_to_arduino(convert_move_to_coordinates("a6b6"))
+        send_to_arduino(convert_move_to_coordinates("c6d6"))
+        send_to_arduino(convert_move_to_coordinates("e6f6"))
+        send_to_arduino(convert_move_to_coordinates("g6h6"))
+        send_to_arduino(convert_move_to_coordinates("a7b7"))
+        send_to_arduino(convert_move_to_coordinates("c7d7"))
+        send_to_arduino(convert_move_to_coordinates("e7f7"))
+        send_to_arduino(convert_move_to_coordinates("g7h7"))
+        send_to_arduino(convert_move_to_coordinates("a8b8"))
+        send_to_arduino(convert_move_to_coordinates("c8d8"))
+        send_to_arduino(convert_move_to_coordinates("e8f8"))
+        send_to_arduino(convert_move_to_coordinates("g8h8"))
+
+def move_piece_test():
+    send_to_arduino("4")
+    send_to_arduino(convert_move_to_coordinates("a1b1"))
+    send_to_arduino(convert_move_to_coordinates("b1c1"))
+    send_to_arduino(convert_move_to_coordinates("c1d1"))
+    send_to_arduino(convert_move_to_coordinates("d1e1"))
+    send_to_arduino(convert_move_to_coordinates("e1f1"))
+    send_to_arduino(convert_move_to_coordinates("f1g1"))
+    send_to_arduino(convert_move_to_coordinates("g1h1"))
+    send_to_arduino(convert_move_to_coordinates("h1a2"))
+    send_to_arduino(convert_move_to_coordinates("a2b2"))
+    send_to_arduino(convert_move_to_coordinates("b2c2"))
+    send_to_arduino(convert_move_to_coordinates("c2d2"))
+    send_to_arduino(convert_move_to_coordinates("d2e2"))
+    send_to_arduino(convert_move_to_coordinates("e2f2"))
+    send_to_arduino(convert_move_to_coordinates("f2g2"))
+    send_to_arduino(convert_move_to_coordinates("g2h2"))
+    send_to_arduino(convert_move_to_coordinates("h2a3"))
+    send_to_arduino(convert_move_to_coordinates("a3b3"))
+    send_to_arduino(convert_move_to_coordinates("b3c3"))
+    send_to_arduino(convert_move_to_coordinates("c3d3"))
+    send_to_arduino(convert_move_to_coordinates("d3e3"))
+    send_to_arduino(convert_move_to_coordinates("e3f3"))
+    send_to_arduino(convert_move_to_coordinates("f3g3"))
+    send_to_arduino(convert_move_to_coordinates("g3h3"))
+    send_to_arduino(convert_move_to_coordinates("h3a4"))
+    send_to_arduino(convert_move_to_coordinates("a4b4"))
+    send_to_arduino(convert_move_to_coordinates("b4c4"))
+    send_to_arduino(convert_move_to_coordinates("c4d4"))
+    send_to_arduino(convert_move_to_coordinates("d4e4"))
+    send_to_arduino(convert_move_to_coordinates("e4f4"))
+    send_to_arduino(convert_move_to_coordinates("f4g4"))
+    send_to_arduino(convert_move_to_coordinates("g4h4"))
+    send_to_arduino(convert_move_to_coordinates("h4a5"))
+    send_to_arduino(convert_move_to_coordinates("a5b5"))
+    send_to_arduino(convert_move_to_coordinates("b5c5"))
+    send_to_arduino(convert_move_to_coordinates("c5d5"))
+    send_to_arduino(convert_move_to_coordinates("d5e5"))
+    send_to_arduino(convert_move_to_coordinates("e5f5"))
+    send_to_arduino(convert_move_to_coordinates("f5g5"))
+    send_to_arduino(convert_move_to_coordinates("g5h5"))
+    send_to_arduino(convert_move_to_coordinates("h5a6"))
+    send_to_arduino(convert_move_to_coordinates("a6b6"))
+    send_to_arduino(convert_move_to_coordinates("b6c6"))
+    send_to_arduino(convert_move_to_coordinates("c6d6"))
+    send_to_arduino(convert_move_to_coordinates("d6e6"))
+    send_to_arduino(convert_move_to_coordinates("e6f6"))
+    send_to_arduino(convert_move_to_coordinates("f6g6"))
+    send_to_arduino(convert_move_to_coordinates("g6h6"))
+    send_to_arduino(convert_move_to_coordinates("h6a7"))
+    send_to_arduino(convert_move_to_coordinates("a7b7"))
+    send_to_arduino(convert_move_to_coordinates("b7c7"))
+    send_to_arduino(convert_move_to_coordinates("c7d7"))
+    send_to_arduino(convert_move_to_coordinates("d7e7"))
+    send_to_arduino(convert_move_to_coordinates("e7f7"))
+    send_to_arduino(convert_move_to_coordinates("f7g7"))
+    send_to_arduino(convert_move_to_coordinates("g7h7"))
+    send_to_arduino(convert_move_to_coordinates("h7a8"))
+    send_to_arduino(convert_move_to_coordinates("a8b8"))
+    send_to_arduino(convert_move_to_coordinates("b8c8"))
+    send_to_arduino(convert_move_to_coordinates("c8d8"))
+    send_to_arduino(convert_move_to_coordinates("d8e8"))
+    send_to_arduino(convert_move_to_coordinates("e8f8"))
+    send_to_arduino(convert_move_to_coordinates("f8g8"))
+    send_to_arduino(convert_move_to_coordinates("g8h8"))
+
 
 def make_ai_move():
     move = stockfish.get_best_move()
@@ -125,8 +227,10 @@ def update_death_placement():
     #print(black_death_count)
     black_death_count += 1
 
-    if black_death_count % 8 == 0:
+    if black_death_count == 8:
         next_black_death_pos = [north_limit, west_limit - 2 * ew_square]
+    elif black_death_count == 16:
+        next_black_death_pos = [north_limit, west_limit -3 * ew_square]
     else:
         next_black_death_pos = [next_black_death_pos[0] - ns_square, next_black_death_pos[1]]
 
@@ -158,13 +262,14 @@ def check_if_move_kills_piece(move):
 
 
 stockfish = Stockfish()
+stockfish.set_fen_position("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1")
 port = connect_to_arduino()
 print(port)
 arduino = serial.Serial(port=port, baudrate=115200, timeout=1)
 time.sleep(1)
 
 while True:
-    mode = int(input("Choose your option: \n 0 - play \n 1 - calibrate \n 2 - Manual control \n"))
+    mode = int(input("Choose your option: \n 0 - play \n 1 - calibrate \n 2 - Manual control \n 3 - Gantry test \n 4 - Move test \n"))
     if mode == 0:
         while True:
             if play_against_self:
@@ -187,3 +292,7 @@ while True:
             instruction = input("instruction: \n 1 x y (move to x,y) \n 2 (grab piece) \n 3 (place piece) \n 4 (calibrate) \n 5 (open and lower) \n 6 (open grabber) \n 7 (close grabber) \n 8 (lower grabber) \n 10 (raise grabber) \n")
             send_to_arduino([instruction])
             #print(instruction)
+    elif mode == 3:
+        gantry_test()
+    elif mode == 4:
+        move_piece_test()
