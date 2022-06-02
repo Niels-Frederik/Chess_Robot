@@ -120,26 +120,21 @@ void execute_instruction(int* instruction)
     case 5:
       open_grabber();
       lower_grabber();
-      //Serial.print("Calibrated");
       break;
     case 6:
       open_grabber();
-      //lower_grabber();
       Serial.print("open grabber");
       break;
     case 7:
       close_grabber();
-      //lower_grabber();
       Serial.print("close grabber");
       break;
     case 8:
       lower_grabber();
-      //lower_grabber();
       Serial.print("close grabber");
       break;
     case 10:
       raise_grabber();
-      //lower_grabber();
       Serial.print("close grabber");
       break;
     }
@@ -150,6 +145,11 @@ void execute_instruction(int* instruction)
 
 void calibrate()
 {
+  close_grabber();
+  delay(1000);
+  open_grabber();
+  delay(1000);
+
   digitalWrite(ns_sleepPin, HIGH);
   while(digitalRead(s_switch) != 0)
   {

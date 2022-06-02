@@ -3,6 +3,7 @@ import string
 import serial
 import time
 import serial.tools.list_ports as ports
+from random import randrange
 
 north_limit = 1425
 south_limit = 45
@@ -13,6 +14,7 @@ ew_square = (east_limit - west_limit) / 7
 next_black_death_pos = [north_limit, (west_limit - ew_square)]
 black_death_count = 0
 play_against_self = True
+test_games = True
 move_count = 0
 
 def gantry_test():
@@ -119,7 +121,13 @@ def move_piece_test():
 
 
 def make_ai_move():
-    move = stockfish.get_best_move()
+    move = ""
+    #print(stockfish.get_top_moves(5))
+    if test_games:
+        moves = stockfish.get_top_moves(5)
+        move = (moves[randrange(len(moves))])['Move']
+    else:
+        move = stockfish.get_best_move()
     print("AI move: ")
     print(move)
     instructions = []
@@ -263,6 +271,8 @@ def check_if_move_kills_piece(move):
 
 stockfish = Stockfish()
 stockfish.set_fen_position("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1")
+if(test_games):
+    stockfish.set_elo_rating(randrange(2000))
 port = connect_to_arduino()
 print(port)
 arduino = serial.Serial(port=port, baudrate=115200, timeout=1)
@@ -276,13 +286,18 @@ while True:
                 make_ai_move()
                 move_count += 1
                 if move_count % 5 == 0:
+                    #send_to_arduino("7")
+                    #send_to_arduino("6")
                     send_to_arduino("4")
             else:
                 make_player_move()
 
             make_ai_move()
             move_count += 1
+            print(move_count)
             if move_count % 5 == 0:
+                #send_to_arduino("7")
+                #send_to_arduino("6")
                 send_to_arduino("4")
 
     elif mode == 1:
